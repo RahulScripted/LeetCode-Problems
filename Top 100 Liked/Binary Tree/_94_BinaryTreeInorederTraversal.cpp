@@ -1,9 +1,10 @@
-// Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
+// Given the root of a binary tree, return the inorder traversal of its nodes' values.
 
 
 
 
 #include <iostream>
+#include <vector>
 using namespace std;
 
 // Definition for a binary tree node.
@@ -19,27 +20,34 @@ public:
 
 class Solution {
 public:
-    bool helper(TreeNode* node1,TreeNode* node2){
-        if(node1 == NULL && node2 == NULL) return true;
-        if(node1 == NULL || node2 == NULL) return false;
-        return node1->val == node2->val && helper(node1->left,node2->right) && helper(node1->right,node2->left);
+    void helper(TreeNode* root,vector<int>&ans){
+        if(root == NULL) return;
+        helper(root->left,ans);
+        ans.push_back(root->val);
+        helper(root->right,ans);
     }
-    bool isSymmetric(TreeNode* root) {
-        return helper(root->left,root->right);
+
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int>ans;
+        helper(root,ans);
+        return ans;
     }
 };
 
 
 int main() {
     Solution solve;
+
+    // Tree
     TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->right = new TreeNode(2);
     root->left->left = new TreeNode(3);
     root->left->right = new TreeNode(4);
-    root->right->left = new TreeNode(4);
     root->right->right = new TreeNode(3);
 
-    if(solve.isSymmetric(root)) cout<<"Yes, Symmetric"<<endl;
-    else cout<<"No, not Symmetric"<<endl;
+    vector<int>ans = solve.inorderTraversal(root);
+    cout<<"Inorder traversal : ";
+    for(int i = 0;i < ans.size();i++) cout<<ans[i]<<" ";
+    cout<<endl;
 }
