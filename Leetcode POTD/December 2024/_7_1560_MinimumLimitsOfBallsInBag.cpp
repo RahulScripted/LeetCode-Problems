@@ -11,7 +11,7 @@ using namespace std;
 
 class Solution {
 public:
-    int minimumSize(vector<int>& nums, int maxOperations) {
+    int minimumSize(vector<int>& nums, int maxOps) {
         int low = 1, high = *max_element(nums.begin(), nums.end());
         while (low < high) {
             int mid = low + (high - low) / 2;
